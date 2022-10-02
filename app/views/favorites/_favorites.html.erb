@@ -1,9 +1,10 @@
-    <% if @book.favorite_by?(current_user) %>
-    　<%= link_to book_favorites_path(@book.id), method: :delete do %>
-      　♥ <%= book.favorites.count %>
-    　<% end %>
-　　　<% else %>
-    　<%= link_to book_favorites_path(@book.id), method: :post do %>
-        ♡ <%= book.favorites.count %>
-    　<% end %>
-　　<% end %>
+<% if book.favorited_by?(current_user) %>
+ <!--いいねがクリックされている状態とされていない状態で表示を変える-->
+  <%= link_to book_favorites_path(book), method: :delete do %>
+  ♥<%= book.favorites.count %>
+  <% end %>
+<% else %>
+  <%= link_to book_favorites_path(book), method: :post do %>
+  ♡<%= book.favorites.count %>
+  <% end %>
+<% end %>
