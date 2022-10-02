@@ -1,7 +1,6 @@
 <div class='container px-5 px-sm-0'>
   <div class='row'>
-
-    <div class='col-md-3'>
+   <div class='col-md-3'>
      <h2>User info</h2>
      <%= render 'info', user: current_user %>
 
@@ -10,8 +9,11 @@
     </div>
 
     <div class='col-md-8 offset-md-1'>
+      <div class='row'>
       <h2>Users</h2>
-        <%= render 'index',users: @users %>
+        <%= render 'index',users: @users, book: @book %>
+      </div>
+    </div>
 
 </div>
 </div>
