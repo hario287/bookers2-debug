@@ -1,10 +1,11 @@
 <% if book.favorited_by?(current_user) %>
  <!--いいねがクリックされている状態とされていない状態で表示を変える-->
   <%= link_to book_favorites_path(book), method: :delete do %>
-  ♥<%= book.favorites.count %>
+  <span style="color:red;">♥
+  <%= book.favorites.count %></span>
   <% end %>
 <% else %>
   <%= link_to book_favorites_path(book), method: :post do %>
-  ♡<%= book.favorites.count %>
+  ♥<%= book.favorites.count %>
   <% end %>
 <% end %>
