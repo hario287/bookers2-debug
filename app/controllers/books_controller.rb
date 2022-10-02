@@ -1,16 +1,17 @@
 class BooksController < ApplicationController
   before_action :current_user, only: [:edit, :update]
 
-  def show
-    @book = Book.find(params[:id])
-    @user = User.find(@book.user.id)
-    @booknew = Book.new
-  end
-
   def index
     @book = Book.new
     @books = Book.all
     @user = current_user
+  end
+
+  def show
+    @book = Book.find(params[:id])
+    @user = User.find(@book.user.id)
+    @booknew = Book.new
+    @book_comment = BookComment.new
   end
 
   def create
@@ -56,6 +57,6 @@ class BooksController < ApplicationController
   def correct_user
     @book = Book.find(params[:id])
     @user = @book.user
-    redirect_to (books_path) unless @user == current_user
+    redirect_to(books_path) unless @user == current_user
   end
 end
