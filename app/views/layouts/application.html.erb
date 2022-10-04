@@ -10,9 +10,12 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
+    <%= render 'layouts/search' %>
       <main>
         <p id="notice"><%= notice %></p>
+          <!--idのついた<p>要素の中にnoticeを出力-->
         <%= yield %>
+
       </main>
     <%= render 'layouts/footer' %>
   </body>
