@@ -1,39 +1,42 @@
 class ChatsController < ApplicationController
-def show
+  before_action :reject_non_related, only: [:show]
+
+  def show
     @user = User.find(params[:id])
-    # ①チャット相手の特定
-
+    #チャット相手の特定
     rooms = current_user.user_rooms.pluck(:room_id)
-    # ②自分(current_user)に紐付くRoomを全て取得
-    user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
-    # ③チャット相手と共通のRoomを持つ中間テーブルがあるか確認
+    #自分(current_user)に紐付くRoomを全て取得
+    user_rooms = UserRoom.find_by(user_id: @user.id, room_id: rooms)
+    #チャット相手と共通のRoomを持つ中間テーブルがあるか確認
 
-    if user_room.nil?
-      # ⑥共通のチャットルームがない場合
-      # ⑥-1 新しくチャットルームを作る
+     unless user_rooms.nil?
+      @room = user_rooms.room
+     else
       @room = Room.new
       @room.save
-      # ⑥-2 そのルームidを共通してもつ中間テーブルを、相手と自分の2人分作る
-      UserRoom.create(user_id: @user.id, room_id: @room.id)
       UserRoom.create(user_id: current_user.id, room_id: @room.id)
-    else
-      # ④共通のチャットルームがあれば、それに紐付くroomを「@room」に代入する
-      @room = user_room.room
+      UserRoom.create(user_id: @user.id, room_id: @room.id)
     end
-　　# ⑤「チャット履歴(@chats)の取得」「新規投稿用の空インスタンス(@chat)作成」
+
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
   end
 
   def create
     @chat = current_user.chats.new(chat_params)
-    @chat.save
+    render :validater unless @chat.save
   end
 
   private
 
   def chat_params
-    params.require(:chat).permit(:message, :room_id).merge(user_id: current_user.id)
+    params.require(:chat).permit(:message, :room_id)
   end
 
+  def reject_non_related
+    user = User.find(params[:id])
+    unless current_user.following?(user) && user.following?(current_user)
+      redirect_to books_path
+    end
+  end
 end
