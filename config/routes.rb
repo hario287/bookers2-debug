@@ -14,5 +14,9 @@ devise_for :users
     get 'followers' => 'relationships#followers', as: 'followers'
   end
 
+  # chats_controllerのshowアクションでチャットを行う
+  get 'chat/:id', to: 'chats#show', as: 'chat'
+  resources :chats, only: [:create, :show]
+
   get 'search' => 'searches#search'
 end

@@ -21,10 +21,12 @@
 
 <div class='row'>
   <% if current_user != user %>
-    <td><%= render "relationships/follow", user: user %></td>
+    <div><%= render "relationships/follow", user: user %></div>
   <% else %>
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block edit_user_#{user.id}" do %>
       <i class="fas fa-user-cog"></i>
     <% end %>
   <% end %>
+
+
 </div>
