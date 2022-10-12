@@ -13,7 +13,9 @@
     <div class='col-md-8 offset-md-1'>
       <div class='row'>
       <h2>Users</h2>
-        <%= render 'index',users: @users, book: @book %>
+      <%= link_to "グループを作成する", new_group_path %> |
+      <%= link_to "グループ一覧", groups_path %>
+      <%= render 'index',users: @users, book: @book %>
       </div>
     </div>
 

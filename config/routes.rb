@@ -18,5 +18,8 @@ devise_for :users
   #get 'chat/:id', to: 'chats#show', as: 'chat'
   resources :chats, only: [:create, :show]
 
+  #グループ機能
+  resources :groups, only: [:new, :index, :show, :create, :edit, :update]
+
   get 'search' => 'searches#search'
 end
